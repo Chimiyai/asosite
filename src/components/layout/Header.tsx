@@ -11,7 +11,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-gray-950/70 backdrop-blur-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="#home" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.png" // public klasöründeki dosya yolu
             alt="Asoyal Studios Logo"

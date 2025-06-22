@@ -1,6 +1,7 @@
 // src/components/home/InteractiveHero.tsx
 'use client';
 
+import { translateCategory } from '@/lib/utils';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,29 +30,61 @@ export default function InteractiveHero({ projects, videos }: InteractiveHeroPro
 
       {/* -- Projeler Paneli -- */}
       <div className={`absolute left-0 top-0 h-full w-3/4 max-w-2xl bg-gray-950/80 backdrop-blur-sm p-8 transition-all duration-700 ease-in-out overflow-y-auto ${view === 'projects' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}>
-        <h2 className="text-3xl font-bold text-white mb-6">Gelecek Projeler</h2>
-        <ul className="space-y-4">
+        <h2 className="mb-6 text-3xl font-bold text-white">Gelecek Projeler</h2>
+        <div className="space-y-6">
           {projects.map((project) => (
-            <li key={project.id} className="text-gray-300 hover:text-white transition-colors">
-                <p className="font-bold">{project.title}</p>
-                <p className="text-sm text-gray-400">{project.description}</p>
-            </li>
+            <div key={project.id} className="flex items-start gap-4">
+              <Image 
+                src={project.coverImage} 
+                alt={project.title} 
+                width={160} 
+                height={90} 
+                className="h-[90px] w-[160px] flex-shrink-0 rounded-md object-cover" 
+              />
+              <div>
+                <h3 className="font-bold text-white">{project.title}</h3>
+                {/* YAYIN TARİHİ EKLEME BÖLÜMÜ */}
+                {project.releaseDate && (
+                  <time 
+                    dateTime={project.releaseDate.toISOString()} 
+                    className="mt-1 block text-xs font-semibold text-sky-400"
+                  >
+                    Yayın Tarihi: {new Date(project.releaseDate).toLocaleDateString('tr-TR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                )}
+                <p className={`text-sm text-gray-300 line-clamp-2 ${project.releaseDate ? 'mt-1' : 'mt-2'}`}>
+                  {project.description}
+                </p>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
-      {/* -- Videolar Paneli -- */}
+      {/* -- Videolar Paneli (GÜNCELLENMİŞ) -- */}
       <div className={`absolute right-0 top-0 h-full w-3/4 max-w-2xl bg-gray-950/80 backdrop-blur-sm p-8 transition-all duration-700 ease-in-out overflow-y-auto ${view === 'videos' ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
-        <h2 className="text-3xl font-bold text-white mb-6">Son Videolar</h2>
-        <ul className="space-y-4">
+        <h2 className="mb-6 text-3xl font-bold text-white">Son Videolar</h2>
+        <div className="space-y-6">
           {videos.map((video) => (
-            <li key={video.id}>
-              <Link href={`https://www.youtube.com/watch?v=${video.youtubeId}`} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">
-                {video.title}
-              </Link>
-            </li>
+            <Link key={video.id} href={`https://www.youtube.com/watch?v=${video.youtubeId}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 transition-opacity hover:opacity-80">
+              <Image 
+                src={`https://i.ytimg.com/vi/${video.youtubeId}/mqdefault.jpg`} 
+                alt={video.title} 
+                width={160} 
+                height={90} 
+                className="h-[90px] w-[160px] flex-shrink-0 rounded-md object-cover" 
+              />
+              <div>
+                <h3 className="font-bold text-white">{video.title}</h3>
+                <p className="text-sm text-gray-400">{translateCategory(video.category)}</p>
+              </div>
+            </Link>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* -- Merkezdeki Logo ve Mikrofon -- */}
@@ -66,13 +99,11 @@ export default function InteractiveHero({ projects, videos }: InteractiveHeroPro
           className="drop-shadow-lg" // Logoya hafif bir gölge ekleyerek daha belirgin hale getirelim
         />
         <Image
-          src="/microphone.svg"
+          src="/microphone.png" // Yeni PNG dosyamızın yolu
           alt="Mikrofon"
-          // Boyutları artırıyoruz
-          width={250} // Örn: 100'den 150'ye
-          height={250} // Örn: 100'den 150'ye
-          // Negatif margin ile yukarı çekiyoruz ve animasyon sınıflarını ekliyoruz
-          className={`-mt-40 drop-shadow-md ${microphoneClasses}`} // -mt-12 mikrofonu 3rem (48px) yukarı taşır
+          width={150}
+          height={150}
+          className={`-mt-12 drop-shadow-md ${microphoneClasses} brightness-0 invert`}
         />
       </div>
     </section>

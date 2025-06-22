@@ -23,9 +23,12 @@ async function getPageData() {
         publishedAt: 'desc', // En yeni videolar en üstte
       },
     }),
-    prisma.teamMember.findMany(),
+    prisma.teamMember.findMany({
+      orderBy: {
+        order: 'asc', // 'name' yerine 'order' a göre sırala (asc = artan)
+      },
+    }),
   ]);
-
   return { projects, videos, teamMembers };
 }
 

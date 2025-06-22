@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "TeamMember" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 99;
