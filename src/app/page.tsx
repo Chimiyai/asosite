@@ -1,103 +1,103 @@
-import Image from "next/image";
+import prisma from '@/lib/prisma'; // Prisma client'ımızı import ediyoruz
 
-export default function Home() {
+import type { Project, TeamMember, Video } from '@prisma/client';
+
+// Component'lerimizi import ediyoruz
+import InteractiveHero from '@/components/home/InteractiveHero';
+import ProjectCard from '@/components/shared/ProjectCard'; // Bunu oluşturman gerekecek
+import VideoCard from '@/components/shared/VideoCard'; // Bunu oluşturman gerekecek
+import TeamMemberCard from '@/components/shared/TeamMemberCard';
+
+// Sunucu tarafında çalışacak ve veritabanından tüm gerekli verileri tek seferde çekecek asenkron fonksiyon
+async function getPageData() {
+  // Tüm sorguları aynı anda başlatmak için Promise.all kullanıyoruz, bu daha performanslıdır.
+  const [projects, videos, teamMembers] = await Promise.all([
+    prisma.project.findMany({
+      orderBy: {
+        // Tamamlanmış projeleri yayın tarihine göre, gelecek projeleri oluşturulma tarihine göre sırala
+        releaseDate: 'desc',
+      },
+    }),
+    prisma.video.findMany({
+      orderBy: {
+        publishedAt: 'desc', // En yeni videolar en üstte
+      },
+    }),
+    prisma.teamMember.findMany(),
+  ]);
+
+  return { projects, videos, teamMembers };
+}
+
+// Ana sayfa component'imiz (Bu bir Server Component'tir)
+export default async function HomePage() {
+  // Verileri çekiyoruz
+  const { projects, videos, teamMembers } = await getPageData();
+
+  // Projeleri durumlarına göre ayırıyoruz
+  const completedProjects = projects.filter(p => p.status === 'COMPLETED');
+  const upcomingProjects = projects.filter(p => p.status !== 'COMPLETED');
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    // Ana layout'un içindeki <main> etiketinin altındayız, bu yüzden ekstra bir <div>'e gerek yok
+    <>
+      {/* 1. INTERACTIVE HERO BÖLÜMÜ */}
+      {/* Bu bölüme en yeni projeleri ve videoları prop olarak gönderiyoruz */}
+      <InteractiveHero 
+        projects={upcomingProjects} 
+        videos={videos.slice(0, 5)} // Hero'da göstermek için sadece ilk 5 videoyu alalım
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* 2. TAMAMLANMIŞ PROJELER BÖLÜMÜ */}
+      <section id="projects" className="py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Tamamlanan Projeler</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+              Hayata geçirdiğimiz ve gurur duyduğumuz dublaj projelerimiz.
+            </p>
+          </div>
+          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-700 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {completedProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* 3. VİDEOLAR BÖLÜMÜ */}
+      <section id="videos" className="py-24 sm:py-32 bg-gray-900/50 rounded-lg">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">YouTube İçeriklerimiz</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+              Stüdyo maceralarımızdan kamera arkası görüntülerine kadar en son videolarımız.
+            </p>
+          </div>
+          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {videos.map((video) => (
+              <VideoCard key={video.id} video={video} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. EKİP BÖLÜMÜ */}
+      <section id="team" className="py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Ekibimiz</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
+              Bu stüdyonun arkasındaki yetenekli ve tutkulu sesler.
+            </p>
+          </div>
+          <ul role="list" className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {teamMembers.map((member) => (
+              <TeamMemberCard key={member.id} member={member} />
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
   );
 }

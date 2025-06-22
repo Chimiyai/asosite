@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Projeler (hem gelecek hem tamamlanmış)
+model Project {
+  id          String   @id @default(cuid())
+  title       String   // Proje adı, örn: "Cyberpunk 2077 Türkçe Dublaj"
+  description String   @db.Text // Proje hakkında detaylı bilgi
+  coverImage  String   // Proje kapak fotoğrafının URL'si
+  status      Status   // Projenin durumu (Enum ile)
+  releaseDate DateTime? // Yayınlanma tarihi (nullable, çünkü bazı gelecek projelerin tarihi belli olmayabilir)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Proje durumlarını belirtmek için bir Enum
+enum Status {
+  UPCOMING  // Gelecek Proje
+  IN_PROGRESS // Üzerinde Çalışılıyor
+  COMPLETED // Tamamlanmış
+}
+
+// YouTube videoları
+model Video {
+  id          String   @id @default(cuid())
+  title       String   // Video başlığı
+  youtubeId   String   @unique // YouTube video ID'si (örn: "dQw4w9WgXcQ")
+  category    Category // Videonun kategorisi (Enum ile)
+  description String?  // Opsiyonel video açıklaması
+  publishedAt DateTime @default(now()) // Siteye eklenme tarihi
+}
+
+// Video kategorilerini belirtmek için bir Enum
+enum Category {
+  SHORT     // YouTube Shorts
+  NORMAL    // Normal Video
+  TRAILER   // Fragman
+  BEHIND_THE_SCENES // Kamera Arkası
+}
+
+// Ekip Üyeleri
+model TeamMember {
+  id         String  @id @default(cuid())
+  name       String  // Üyenin adı
+  role       String  // Üyenin rolü (örn: "Ses Sanatçısı", "Proje Yöneticisi")
+  imageUrl   String  // Profil fotoğrafı URL'si
+  socials    Json?   // Sosyal medya linkleri (JSON formatında esnek yapı)
+                       // Örnek: { "twitter": "url", "instagram": "url" }
+}

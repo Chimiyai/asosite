@@ -1,0 +1,19 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine  # PostgreSQL 15'in hafif bir versiyonunu kullanıyoruz
+    restart: always            # Docker başladığında konteyneri de otomatik başlat
+    environment:
+      - POSTGRES_USER=asosyal_user
+      - POSTGRES_PASSWORD=450CHI810mi1155YA
+      - POSTGRES_DB=asosyalsite
+    ports:
+      - '5432:5432'            # Bilgisayarının 5432 portunu, konteynerin 5432 portuna bağla
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Verileri kalıcı olarak sakla
+
+volumes:
+  postgres-data:
