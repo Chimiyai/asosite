@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Asoyal Studios Admin Paneli
 
-## Getting Started
+Bu proje, Asoyal Studios için geliştirilmiş modern bir **Next.js 14** tabanlı admin panelidir. Proje yönetimi, ekip üyeleri ve video içeriklerinin yönetimi için kullanılır. Kimlik doğrulama, NextAuth ile environment değişkenlerinden alınan admin hesabı üzerinden yapılır. Veritabanı olarak PostgreSQL kullanılır ve Prisma ile yönetilir.
 
-First, run the development server:
+## Özellikler
+- Proje ekleme, düzenleme, silme
+- Ekip üyeleri yönetimi
+- Video içerikleri yönetimi
+- Sadece admin girişi (kullanıcı adı ve şifre .env dosyasından alınır)
+- Responsive ve modern arayüz
 
+## Teknolojiler
+- [Next.js 14 (App Router)](https://nextjs.org/)
+- [Prisma ORM](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [NextAuth.js v5 (Credentials Provider)](https://authjs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- Docker (isteğe bağlı, local DB için)
+
+## Kurulum
+
+### 1. Depoyu Klonlayın
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Chimiyai/asosite.git
+cd asosite
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Bağımlılıkları Yükleyin
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Ortam Değişkenlerini Ayarlayın
+Proje köküne bir `.env` dosyası oluşturun ve aşağıdaki gibi doldurun:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=cokgizlisifre123
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=uzun-bir-string
+DATABASE_URL=postgresql://user:password@localhost:5432/asosite
+```
 
-## Learn More
+> **Not:** `ADMIN_USERNAME` ve `ADMIN_PASSWORD` ile admin girişi yapılır. Diğer kullanıcılar sisteme giriş yapamaz.
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Veritabanı Kurulumu
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### a) Docker ile PostgreSQL (Önerilen)
+```bash
+docker-compose up -d
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### b) Neon, Supabase veya Railway gibi bulut PostgreSQL servisi de kullanabilirsiniz. `DATABASE_URL`'ü ona göre ayarlayın.
 
-## Deploy on Vercel
+### 5. Prisma Migrate & Seed
+```bash
+npx prisma migrate deploy
+npx prisma db seed
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 6. Geliştirme Sunucusunu Başlatın
+```bash
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Uygulama [http://localhost:3000](http://localhost:3000) adresinde çalışacaktır.
+
+## Deployment (Vercel)
+- Vercel'e deploy etmek için ortam değişkenlerini Vercel panelinden ekleyin.
+- Production veritabanı olarak Neon, Supabase vb. kullanın.
+- `DATABASE_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` değişkenlerini mutlaka tanımlayın.
+
+## İletişim
+Herhangi bir soru veya katkı için: [Asoyal Studios](mailto:asoyalstudios@gmail.com)
+
+---
+
+Bu proje MIT lisansı ile lisanslanmıştır. Ayrıntılar için [LICENSE](./LICENSE) dosyasına bakınız.
