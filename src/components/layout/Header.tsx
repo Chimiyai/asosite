@@ -14,13 +14,13 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.png" // public klasöründeki dosya yolu
-            alt="Asoyal Studios Logo"
+            alt="asosyal Studios Logo"
             width={40}
             height={40}
             className="rounded-full" // Eğer logo kare ise ve dairesel göstermek istersen
           />
           <span className="hidden sm:inline-block font-bold text-lg">
-            Asoyal Studios
+            asosyal Studios
           </span>
         </Link>
 

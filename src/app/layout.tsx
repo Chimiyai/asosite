@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer'; // Doğru yolu belirttiğinden 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Asoyal Studios',
+  title: 'asosyal Studios',
   description: 'Profesyonel oyun dublaj stüdyosu',
 };
 

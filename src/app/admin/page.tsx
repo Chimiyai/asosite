@@ -95,7 +95,7 @@ export default async function AdminDashboardPage() {
             />
             <ManagementCard 
                 title="Ekip Üyelerini Yönet"
-                description="Asoyal Studios ekibine yeni üyeler ekleyin ve sıralamayı düzenleyin."
+                description="asosyal Studios ekibine yeni üyeler ekleyin ve sıralamayı düzenleyin."
                 href="/admin/team"
             />
         </div>

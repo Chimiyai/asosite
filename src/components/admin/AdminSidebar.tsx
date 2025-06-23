@@ -18,7 +18,7 @@ function AdminSidebar() {
     <aside className="w-64 flex-shrink-0 bg-gray-800 p-4">
       <div className="flex h-full flex-col justify-between">
         <nav>
-          <h2 className="mb-4 text-xl font-bold">Asoyal Yönetim</h2>
+          <h2 className="mb-4 text-xl font-bold">asosyal Yönetim</h2>
           <ul className="space-y-2">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;

@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="container mx-auto px-6 py-8">
         <div className="flex flex-col items-center text-center">
           <Link href="#home" className="text-xl font-bold text-white">
-            Asoyal Studios
+            asosyal Studios
           </Link>
           <p className="max-w-md mx-auto mt-4 text-gray-400">
             Profesyonel dublaj sanatçılarından oluşan bir topluluk.
@@ -47,7 +47,7 @@ export default function Footer() {
         <hr className="my-8 h-px border-none bg-gray-700" />
 
         <div className="text-center text-gray-500">
-          <p>© {new Date().getFullYear()} Asoyal Studios. Tüm hakları saklıdır.</p>
+          <p>© {new Date().getFullYear()} asosyal Studios. Tüm hakları saklıdır.</p>
           <p className="mt-2">
             <span><a
               href="https://guns.lol/chimiya"
