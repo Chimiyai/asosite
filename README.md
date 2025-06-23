@@ -59,7 +59,7 @@ $ npm run dev
 ## 🖼️ Ekran Görüntüsü
 
 <p align="center">
-  <img src="public/images/projects/test.jpg" alt="Asoyal Studios Admin Paneli" width="600" />
+  <img src="public/images/projects/ekrangrnts.jpg" alt="Asoyal Studios Admin Paneli" width="600" />
 </p>
 
 ---
@@ -101,7 +101,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/asosite
 ## 🤝 Katkı & İletişim
 
 - Pull request ve issue açarak katkıda bulunabilirsiniz.
-- Soru ve öneriler için: [asoyalstudios@gmail.com](mailto:asoyalstudios@gmail.com)
+- Soru ve öneriler için: [AsosyalHacker12@gmail.com](AsosyalHacker12@gmail.com)
 
 ---
 
