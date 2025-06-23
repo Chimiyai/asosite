@@ -25,8 +25,22 @@ export default function InteractiveHero({ projects, videos }: InteractiveHeroPro
     // Ekrani kaplayan bir hero alani
     <section id="home" className="relative flex h-screen w-full items-center justify-center overflow-hidden">
       {/* Tıklama Alanı */}
-      <div className="absolute left-0 top-0 h-full w-1/2 cursor-pointer" onClick={() => setView(view === 'projects' ? 'center' : 'projects')}></div>
-      <div className="absolute right-0 top-0 h-full w-1/2 cursor-pointer" onClick={() => setView(view === 'videos' ? 'center' : 'videos')}></div>
+      <div className="absolute left-0 top-0 h-full w-1/2 cursor-pointer group" onClick={() => setView(view === 'projects' ? 'center' : 'projects')}>
+        {view === 'center' && (
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col items-start text-white/80 pointer-events-none select-none">
+            <span className="text-4xl animate-bounce">⟶</span>
+            <span className="mt-2 bg-black/60 rounded px-2 py-1 text-sm">Gelecek Projeleri Gör</span>
+          </div>
+        )}
+      </div>
+      <div className="absolute right-0 top-0 h-full w-1/2 cursor-pointer group" onClick={() => setView(view === 'videos' ? 'center' : 'videos')}>
+        {view === 'center' && (
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-end text-white/80 pointer-events-none select-none">
+            <span className="text-4xl animate-bounce">⟵</span>
+            <span className="mt-2 bg-black/60 rounded px-2 py-1 text-sm">Videoları Gör</span>
+          </div>
+        )}
+      </div>
 
       {/* -- Projeler Paneli -- */}
       <div className={`absolute left-0 top-0 h-full w-3/4 max-w-2xl bg-gray-950/80 backdrop-blur-sm p-8 transition-all duration-700 ease-in-out overflow-y-auto ${view === 'projects' ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}>
