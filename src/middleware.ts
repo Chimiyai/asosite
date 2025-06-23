@@ -1,20 +1,32 @@
 // Dosya Yolu: src/middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { cookies } from 'next/headers'
+import { auth } from '@/auth'
 
+// Middleware'i geçici olarak devre dışı bırakıyoruz
 export async function middleware(request: NextRequest) {
-  const authCookie = cookies().get('next-auth.session-token')
+  const pathname = request.nextUrl.pathname
   
-  if (!authCookie && request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-    return NextResponse.redirect(new URL('/admin/login', request.url))
+  // Login sayfasını kontrol etme
+  if (pathname === '/auth/login') {
+    return NextResponse.next()
+  }
+
+  const session = await auth()
+  
+  // Sadece /admin ve altındaki sayfalar için (login hariç)
+  if (!session && pathname.startsWith('/admin')) {
+    const url = new URL('/auth/login', request.url)
+    return NextResponse.redirect(url)
   }
 
   return NextResponse.next()
 }
 
+// Sadece /admin altındaki sayfalarda çalış
 export const config = {
   matcher: [
-    '/admin/:path*',
+    '/admin',
+    '/admin/((?!login).)*'
   ],
 }

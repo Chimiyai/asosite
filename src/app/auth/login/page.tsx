@@ -1,7 +1,8 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import { authenticate } from '@/actions/authActions'; // Birazdan oluşturacağımız yeni action
+import { authenticate } from '@/actions/authActions';
+import { useEffect, useRef, useState } from 'react';
 
 // Form gönderilirken butonu yöneten component
 function LoginButton() {
@@ -18,18 +19,28 @@ function LoginButton() {
 }
 
 export default function LoginPage() {
-  // `authenticate` action'ını useFormState (yeni adıyla useActionState) ile kullanıyoruz.
-  // Bu, action'dan dönebilecek hata mesajlarını yakalamamızı sağlar.
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (submitted && errorMessage === undefined) {
+      window.location.href = '/admin';
+    }
+  }, [errorMessage, submitted]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-900">
       <div className="w-full max-w-md rounded-lg bg-gray-800 p-8 shadow-lg">
         <h1 className="mb-6 text-center text-3xl font-bold text-white">
-          Asoyal Studios - Admin Paneli
+          Admin Paneli Girişi
         </h1>
-        {/* Formun action'ı artık bizim sarmalayıcı fonksiyonumuz olacak */}
-        <form action={dispatch} className="space-y-6">
+        <form
+          action={async (formData) => {
+            setSubmitted(true);
+            await dispatch(formData);
+          }}
+          className="space-y-6"
+        >
           <div className="space-y-4">
             <div>
               <label
@@ -63,7 +74,7 @@ export default function LoginPage() {
             </div>
           </div>
           <LoginButton />
-          {errorMessage && (
+          {errorMessage && submitted && (
             <div className="flex items-center justify-center">
               <p className="text-sm text-red-500">{errorMessage}</p>
             </div>

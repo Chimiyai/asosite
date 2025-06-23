@@ -9,7 +9,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   // Bu, middleware'e ek olarak bir güvenlik katmanı daha sağlar.
   const session = await auth();
   if (!session) {
-    redirect('/admin/login'); // Eğer bir şekilde buraya gelinirse ve oturum yoksa, tekrar login'e yolla.
+    redirect('/auth/login'); // Eğer bir şekilde buraya gelinirse ve oturum yoksa, tekrar login'e yolla.
   }
 
   return (

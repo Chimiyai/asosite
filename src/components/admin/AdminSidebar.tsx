@@ -3,7 +3,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 
 const navLinks = [
   { name: 'Ana Panel', href: '/admin' },
@@ -41,7 +40,14 @@ function AdminSidebar() {
           </ul>
         </nav>
         <button
-          onClick={() => signOut({ callbackUrl: '/' })}
+          onClick={() => {
+            // Tüm olası NextAuth session cookie'lerini sil
+            document.cookie = 'next-auth.session-token=; Max-Age=0; path=/;';
+            document.cookie = 'next-auth.session-token.localhost=; Max-Age=0; path=/;';
+            document.cookie = '__Secure-next-auth.session-token=; Max-Age=0; path=/;';
+            document.cookie = '__Host-next-auth.session-token=; Max-Age=0; path=/;';
+            window.location.href = '/auth/login';
+          }}
           className="mt-4 w-full rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700"
         >
           Çıkış Yap
