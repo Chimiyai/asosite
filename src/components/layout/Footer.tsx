@@ -48,6 +48,17 @@ export default function Footer() {
 
         <div className="text-center text-gray-500">
           <p>© {new Date().getFullYear()} Asoyal Studios. Tüm hakları saklıdır.</p>
+          <p className="mt-2">
+            <span><a
+              href="https://guns.lol/chimiya"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline hover:text-blue-300 transition-colors"
+            >
+              Chimiya
+            </a> tarafından geliştirildi</span>
+            
+          </p>
         </div>
       </div>
     </footer>
