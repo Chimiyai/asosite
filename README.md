@@ -78,11 +78,11 @@ $ npm run dev
 ## ⚙️ Ortam Değişkenleri
 
 ```env
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=cokgizlisifre123
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=uzun-bir-string
-DATABASE_URL=postgresql://user:password@localhost:5432/asosite
+ADMIN_USERNAME=***
+ADMIN_PASSWORD=***
+NEXTAUTH_URL=***
+NEXTAUTH_SECRET=***
+DATABASE_URL=***
 ```
 
 > 🔑 <b>Güvenlik:</b> `NEXTAUTH_SECRET` en az 32 karakter olmalı. Production için güçlü bir değer kullanın.
