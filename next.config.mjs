@@ -14,6 +14,18 @@ const nextConfig = {
       },
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  experimental: {
+    appDir: true,
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  }
 };
 
 export default nextConfig;

@@ -6,6 +6,14 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { notFound } from 'next/navigation';
 
+interface EditPageProps {
+  params: {
+    id: string;
+  };
+  searchParams: { [key:string]: string | string[] | undefined };
+}
+
+
 // Server Action: Projeyi güncelle
 async function updateProject(
   projectId: string,
@@ -63,17 +71,14 @@ async function updateProject(
 }
 
 
-// Düzenleme sayfası component'i
-export default async function EditProjectPage({ params }: { params: { id: string } }) {
-  // URL'den gelen proje ID'sini al
+// --- COMPONENT'İN İMZASINI GÜNCELLİYORUZ ---
+export default async function EditProjectPage({ params }: EditPageProps) {
   const projectId = params.id;
   
-  // ID'ye göre veritabanından proje bilgilerini çek
   const project = await prisma.project.findUnique({
     where: { id: projectId },
   });
 
-  // Eğer proje bulunamazsa, 404 Not Found sayfası göster
   if (!project) {
     notFound();
   }

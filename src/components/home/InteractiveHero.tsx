@@ -93,17 +93,17 @@ export default function InteractiveHero({ projects, videos }: InteractiveHeroPro
           src="/logo.png"
           alt="Asoyal Studios Logo"
           // Boyutları artırıyoruz
-          width={280} // Örn: 200'den 280'e
-          height={280} // Örn: 200'den 280'e
+          width={400} // Örn: 200'den 280'e
+          height={400} // Örn: 200'den 280'e
           priority
           className="drop-shadow-lg" // Logoya hafif bir gölge ekleyerek daha belirgin hale getirelim
         />
         <Image
           src="/microphone.png" // Yeni PNG dosyamızın yolu
           alt="Mikrofon"
-          width={150}
-          height={150}
-          className={`-mt-12 drop-shadow-md ${microphoneClasses} brightness-0 invert`}
+          width={300}
+          height={300}
+          className={`-mt-52 drop-shadow-md ${microphoneClasses} brightness-0 invert`}
         />
       </div>
     </section>
