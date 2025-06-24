@@ -2,8 +2,16 @@ import Image from 'next/image';
 import type { Project } from '@prisma/client';
 import { translateStatus } from '@/lib/utils';
 
+// Açıklamadan ilk linki çıkaran yardımcı fonksiyon
+function extractFirstUrl(text: string): string | null {
+  const match = text.match(/https?:\/\/[^\s]+/);
+  return match ? match[0] : null;
+}
+
 export default function ProjectCard({ project }: { project: Project }) {
-  return (
+  const firstUrl = extractFirstUrl(project.description);
+
+  const CardContent = (
     <article className="flex flex-col items-start justify-between">
       <div className="relative w-full">
         <Image src={project.coverImage} alt={project.title} width={1600} height={900} className="aspect-[16/9] w-full rounded-2xl bg-gray-800 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" />
@@ -23,5 +31,12 @@ export default function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
     </article>
-  )
+  );
+
+  // Eğer açıklamada link varsa kartı o linke yönlendiren bir <a> ile sarmala
+  return firstUrl ? (
+    <a href={firstUrl} target="_blank" rel="noopener noreferrer" className="block hover:opacity-80 transition-opacity">
+      {CardContent}
+    </a>
+  ) : CardContent;
 }
