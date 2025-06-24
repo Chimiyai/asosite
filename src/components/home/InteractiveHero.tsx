@@ -105,7 +105,7 @@ export default function InteractiveHero({ projects, videos }: InteractiveHeroPro
       <div className={`relative z-10 flex flex-col items-center ${logoContainerClasses}`}>
         <Image
           src="/logo.png"
-          alt="asosyal Studios Logo"
+          alt="Asosyal Studios Logo"
           // Boyutları artırıyoruz
           width={400} // Örn: 200'den 280'e
           height={400} // Örn: 200'den 280'e

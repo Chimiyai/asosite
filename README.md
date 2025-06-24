@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="public/logo.png" alt="asosyal Studios Logo" width="120" />
+  <img src="public/logo.png" alt="Asosyal Studios Logo" width="120" />
 </p>
 
-<h1 align="center">🚀 asosyal Studios Admin Paneli</h1>
+<h1 align="center">🚀 Asosyal Studios Admin Paneli</h1>
 
 <p align="center">
   <b>Modern, güvenli ve hızlı bir Next.js 14 admin paneli</b><br/>
@@ -59,7 +59,7 @@ $ npm run dev
 ## 🖼️ Ekran Görüntüsü
 
 <p align="center">
-  <img src="public/images/projects/ekrangrnts.jpg" alt="asosyal Studios Admin Paneli" width="600" />
+  <img src="public/images/projects/ekrangrnts.jpg" alt="Asosyal Studios Admin Paneli" width="600" />
 </p>
 
 ---
