@@ -7,6 +7,7 @@ import InteractiveHero from '@/components/home/InteractiveHero';
 import ProjectCard from '@/components/shared/ProjectCard'; // Bunu oluşturman gerekecek
 import VideoCard from '@/components/shared/VideoCard'; // Bunu oluşturman gerekecek
 import TeamMemberCard from '@/components/shared/TeamMemberCard';
+import DonationSection from '@/components/home/DonationSection';
 
 // Sunucu tarafında çalışacak ve veritabanından tüm gerekli verileri tek seferde çekecek asenkron fonksiyon
 async function getPageData() {
@@ -101,6 +102,9 @@ export default async function HomePage() {
           </ul>
         </div>
       </section>
+
+      {/* 5. BAĞIŞ BÖLÜMÜ */}
+      <DonationSection />
     </>
   );
 }

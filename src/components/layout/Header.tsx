@@ -35,6 +35,9 @@ export default function Header() {
           <Link href="#team" className="transition-colors hover:text-white">
             Ekip
           </Link>
+          <Link href="#donation" className="transition-colors hover:text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded-md">
+            Bağış
+          </Link>
         </nav>
       </div>
     </header>
