@@ -9,7 +9,7 @@ export default function DonationSection() {
   // IBAN bilgisi - gerçek IBAN ile değiştirilmeli
   const iban = "TR12 3456 7890 1234 5678 9012 34";
   const bankName = "Asosyal Studios Bank";
-  const accountName = "Asosyal Studios";
+  const accountName = "Arda Güzey";
 
   const copyToClipboard = async () => {
     try {
